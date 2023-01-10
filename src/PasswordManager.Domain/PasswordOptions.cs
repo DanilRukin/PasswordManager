@@ -70,7 +70,7 @@ namespace PasswordManager.Domain
 
         public void SetCountOfNumbers(int count)
         {
-            if (count < 1)
+            if (count < 0)
                 return;
             Length -= CountOfNumbers;
             CountOfNumbers = count;
@@ -79,7 +79,7 @@ namespace PasswordManager.Domain
 
         public void SetCountOfCharacters(int count)
         {
-            if (count < 1)
+            if (count < 0)
                 return;
             Length -= CountOfCharacters;
             CountOfCharacters = count;
