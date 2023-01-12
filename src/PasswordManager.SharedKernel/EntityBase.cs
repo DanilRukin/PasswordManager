@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PasswordManager.SharedKernel
 {
-    public abstract class EntityBase<TKey> : IDomainObject, IEquatable<EntityBase<TKey>> where TKey : class
+    public abstract class EntityBase<TKey> : IDomainObject, IEquatable<EntityBase<TKey>>
     {
         public TKey Id { get; protected set; }
         private List<DomainEvent> _domainEvents = new();
