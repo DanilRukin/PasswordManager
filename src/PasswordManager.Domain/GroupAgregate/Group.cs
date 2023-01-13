@@ -34,7 +34,15 @@ namespace PasswordManager.Domain.GroupAgregate
         {
             if (record != null)
             {
-                if (_records?.Remove(record) == true)
+                if (ParentDatabase != null)
+                {
+                    if (_records?.Remove(record) == true)
+                    {
+                        ParentDatabase.AddRecord(record);
+                        record.ChangeContainerId(ParentDatabase.Id);
+                    }
+                }
+                else if (_records?.Remove(record) == true)
                     record.ChangeContainerId(0);
             }
         }

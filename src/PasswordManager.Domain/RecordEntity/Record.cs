@@ -11,7 +11,7 @@ namespace PasswordManager.Domain.RecordEntity
 {
     public class Record : EntityBase<int>
     {
-        public DateTime CreationDate { get; }
+        public DateTime CreationDate { get; private set; }
         public DateTime LastModifiedDate { get; private set; }
         public DateTime LastAccessDate { get; private set; }
         public string Description { get; private set; }
