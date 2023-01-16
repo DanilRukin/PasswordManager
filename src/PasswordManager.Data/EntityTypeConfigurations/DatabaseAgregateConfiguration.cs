@@ -16,13 +16,13 @@ namespace PasswordManager.Data.EntityTypeConfigurations
         {
             builder.ToTable(DataConstants.GroupAndDatabaseCommonTableName);
 
-            builder.HasKey(x => x.Id);
-            builder.Property(d => d.Id).ValueGeneratedOnAdd();
+            //builder.HasKey(x => x.Id);
+            //builder.Property(d => d.Id).ValueGeneratedOnAdd();
 
-            builder.Ignore(d => d.DomainEvents);
+            //builder.Ignore(d => d.DomainEvents);
 
-            builder.Property(x => x.Name).IsRequired();
-            builder.Property(d => d.ParentDatabase).IsRequired(false);
+            //builder.Property(x => x.Name).IsRequired();
+            //builder.Property(d => d.ParentDatabase).IsRequired(false);
 
             builder.HasMany<Group>(DataConstants.GroupsCollectionName)
                 .WithOne(g => g.ParentDatabase)

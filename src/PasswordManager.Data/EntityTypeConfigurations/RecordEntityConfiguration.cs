@@ -23,7 +23,7 @@ namespace PasswordManager.Data.EntityTypeConfigurations
             builder.Property(r => r.ResourceName).IsRequired();
             builder.Property(r => r.Description).IsRequired();
             builder.Property(r => r.ResourcePasswordHash).IsRequired();
-            builder.Property(r => r.RecordContainerId).IsRequired();
+            builder.Property(r => r.RecordContainerId).IsRequired(false);
             builder.Property(r => r.CreationDate).IsRequired();
             builder.Property(r => r.LastAccessDate).IsRequired();
             builder.Property(r => r.LastModifiedDate).IsRequired();

@@ -24,15 +24,15 @@ namespace PasswordManager.Data.EntityTypeConfigurations
             builder.Ignore(g => g.DomainEvents);
 
             builder.Property(g => g.Name).IsRequired();
-            builder.Property(g => g.ParentDatabase).IsRequired(false);
+            //builder.Property(g => g.ParentDatabase).IsRequired(false);
 
             builder.HasDiscriminator<string>(DataConstants.DiscriminatorName)
                 .HasValue<Group>(nameof(Group))
                 .HasValue<Database>(nameof(Database));
 
-            builder.HasOne(g => g.ParentDatabase)
-                .WithMany(DataConstants.GroupsCollectionName)
-                .OnDelete(DeleteBehavior.Cascade);
+            //builder.HasMany<Group>(DataConstants.GroupsCollectionName)
+            //    .WithOne(g => g.ParentDatabase)
+            //    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany<Record>(DataConstants.RecordsCollectionName)
                 .WithOne()

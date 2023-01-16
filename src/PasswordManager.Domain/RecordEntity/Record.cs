@@ -19,7 +19,7 @@ namespace PasswordManager.Domain.RecordEntity
         public string ResourcePasswordHash { get; private set; }
         public string ResourceUrl { get; private set; }
 
-        public int RecordContainerId { get; private set; }
+        public int? RecordContainerId { get; private set; }
 
         public Record()
         {
