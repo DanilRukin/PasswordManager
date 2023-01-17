@@ -86,5 +86,70 @@ namespace PasswordManager.UnitTests.Data
             Assert.Contains(record, existingGroup.Records);
             CloseDatabase(db);
         }
+
+        [Fact]
+        public void RemoveGroupWithSeveralRecords_RecordsShuoldBeRemoved()
+        {
+            var db = CreateDatabase();
+            db.Database.EnsureCreated();
+            Group group = db.Create("group");
+            var firstRecord = db.Create("resource 1", "", DateTime.UtcNow);
+            var secondRecord = db.Create("resource 2", "", DateTime.UtcNow);
+            group.AddRecord(firstRecord);
+            group.AddRecord(secondRecord);
+            db.SaveChanges();
+            Assert.NotEmpty(db.Records);
+            Assert.NotEmpty(db.Groups);
+
+            db.Entry(group).State = EntityState.Detached;
+            var existingGroup = db.Groups.FirstOrDefault(g => g.Id == group.Id);
+            Assert.NotNull(existingGroup);
+            Assert.NotSame(existingGroup, group);
+            Assert.Empty(existingGroup.Records);
+
+            db.Groups.Remove(existingGroup);
+            db.SaveChanges();
+
+            Assert.Empty(db.Groups);
+            Assert.Empty(db.Records);
+
+            CloseDatabase(db);
+        }
+
+        [Fact]
+        public void RemoveDatabaseWithGroupThatHasRecordsAndWithRecords_DatabaseShouldBeClear()
+        {
+            var db = CreateDatabase();
+            db.Database.EnsureCreated();
+            Database database = ((IDatabaseFactory)db).Create("database");
+            Group group = db.Create("group");
+            var firstRecord = db.Create("resource 1", "", DateTime.UtcNow);
+            var secondRecord = db.Create("resource 2", "", DateTime.UtcNow);
+            var recordInDatabase = db.Create("in database", "", DateTime.UtcNow);
+            group.AddRecord(firstRecord);
+            group.AddRecord(secondRecord);
+            database.AddRecord(recordInDatabase);
+            database.AddGroup(group);
+            db.SaveChanges();
+            Assert.NotEmpty(db.Records);
+            Assert.NotEmpty(db.Groups);
+            Assert.NotEmpty(db.Databases);
+
+            db.Entry(database).State = EntityState.Detached;
+            var existingDatabase = db.Databases.FirstOrDefault(d => d.Id == database.Id);
+            Assert.NotNull(existingDatabase);
+            Assert.NotSame(existingDatabase, database);
+            Assert.Empty(existingDatabase.Records);
+            Assert.Empty(existingDatabase.Groups);
+
+            db.Groups.Remove(existingDatabase);
+            db.SaveChanges();
+
+            Assert.Empty(db.Groups);
+            Assert.Empty(db.Records);
+            Assert.Empty(db.Databases);
+
+            CloseDatabase(db);
+        }
     }
 }
