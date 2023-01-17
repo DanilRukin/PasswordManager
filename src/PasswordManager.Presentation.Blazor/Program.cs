@@ -12,11 +12,11 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 var config = builder.Configuration;
 string migrationAssembly = "PasswordManager.Data";
 
-builder.Services.AddDbContext<PasswordManagerDbContext>(optionBuilder =>
-{
-    optionBuilder.UseSqlite(config.GetConnectionString("SqLite"),
-        sql => sql.MigrationsAssembly(migrationAssembly));
-});
+//builder.Services.AddDbContext<PasswordManagerDbContext>(optionBuilder =>
+//{
+//    optionBuilder.UseSqlite(config.GetConnectionString("SqLite"),
+//        sql => sql.MigrationsAssembly(migrationAssembly));
+//});
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddMudServices();
 
