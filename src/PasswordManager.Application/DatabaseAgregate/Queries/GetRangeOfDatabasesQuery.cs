@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace PasswordManager.Application.DatabaseAgregate.Queries
 {
-    public class GetDatabaseByIdQuery : IRequest<Result<DatabaseDto>>
+    public class GetRangeOfDatabasesQuery : IRequest<Result<IEnumerable<DatabaseDto>>>
     {
-        public int Id { get; }
+        public IEnumerable<int> Ids { get; }
         public bool IncludeAdditionalData { get; }
 
-        public GetDatabaseByIdQuery(int id, bool includeAdditionalData)
+        public GetRangeOfDatabasesQuery(IEnumerable<int> ids, bool includeAdditionalData)
         {
-            Id = id;
+            Ids = ids ?? throw new ArgumentNullException(nameof(ids));
             IncludeAdditionalData = includeAdditionalData;
         }
     }

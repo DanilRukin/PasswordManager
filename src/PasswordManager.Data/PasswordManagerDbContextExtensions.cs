@@ -17,7 +17,7 @@ namespace PasswordManager.Data
             return databases.Include(DataConstants.GroupsCollectionName);
         }
 
-        public static IQueryable<Group> IncludeRecords(this IQueryable<Database> databases)
+        public static IQueryable<Database> IncludeRecords(this IQueryable<Database> databases)
         {
             return databases.Include(DataConstants.RecordsCollectionName);
         }

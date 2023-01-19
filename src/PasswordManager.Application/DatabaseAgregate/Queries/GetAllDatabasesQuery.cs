@@ -9,15 +9,13 @@ using System.Threading.Tasks;
 
 namespace PasswordManager.Application.DatabaseAgregate.Queries
 {
-    public class GetDatabaseByIdQuery : IRequest<Result<DatabaseDto>>
+    public class GetAllDatabasesQuery : IRequest<Result<IEnumerable<DatabaseDto>>>
     {
-        public int Id { get; }
-        public bool IncludeAdditionalData { get; }
+        public bool IncludeAddtionalData { get; }
 
-        public GetDatabaseByIdQuery(int id, bool includeAdditionalData)
+        public GetAllDatabasesQuery(bool includeAddtionalData)
         {
-            Id = id;
-            IncludeAdditionalData = includeAdditionalData;
+            IncludeAddtionalData = includeAddtionalData;
         }
     }
 }
