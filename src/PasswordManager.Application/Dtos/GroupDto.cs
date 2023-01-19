@@ -10,7 +10,7 @@ namespace PasswordManager.Application.Dtos
     {
         public int Id { get; set; }
         public string Name { get; set; } = "";
-        public List<int> RecordIds { get; set; } = new List<int>();
+        public IEnumerable<int> RecordIds { get; set; } = new List<int>();
         public int DatabaseId { get; set; } = 0;
     }
 }

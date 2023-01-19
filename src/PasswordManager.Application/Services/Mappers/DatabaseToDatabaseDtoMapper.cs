@@ -9,12 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PasswordManager.Application.Services
+namespace PasswordManager.Application.Services.Mappers
 {
     internal class DatabaseToDatabaseDtoMapper : IMapper<Database, DatabaseDto>
     {
         public DatabaseDto Map(Database source)
         {
+            if (source == null)
+                return new DatabaseDto();
             DatabaseDto dto = new DatabaseDto
             {
                 Name = source.Name,
