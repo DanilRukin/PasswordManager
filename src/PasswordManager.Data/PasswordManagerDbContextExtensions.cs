@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PasswordManager.Domain.DatabaseAgregate;
 using PasswordManager.Domain.GroupAgregate;
+using PasswordManager.Domain.RecordEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,16 @@ namespace PasswordManager.Data
         public static IQueryable<Group> IncludeRecords(this IQueryable<Group> groups)
         {
             return groups.Include(DataConstants.RecordsCollectionName);
+        }
+
+        public static IQueryable<Group> IncludeParentDatabase(this IQueryable<Group> groups)
+        {
+            return groups.Include(g => g.ParentDatabase);
+        }
+
+        public static IQueryable<Record> IncludeContainer(this IQueryable<Record> records)
+        {
+            return records.Include(r => r.RecordContainerId);
         }
     }
 }

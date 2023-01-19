@@ -66,5 +66,15 @@ namespace PasswordManager.Data
             SaveChanges();
             return db;
         }
+
+        public async Task SaveEntitiesAsync(CancellationToken cancellationToken)
+        {
+            var result = await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            var events = ChangeTracker.Entries<IDomainObject>()
+                .Select(e => e.Entity)
+                .Where(e => e.DomainEvents.Any())
+                .ToArray();
+            await _domainEventDispatcher.DispatchAndClearEvents(events);
+        }
     }
 }
