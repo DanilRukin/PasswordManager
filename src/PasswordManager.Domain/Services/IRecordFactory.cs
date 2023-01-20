@@ -10,6 +10,6 @@ namespace PasswordManager.Domain.Services
     public interface IRecordFactory
     {
         Record Create(string resourceName, string resourcePasswordHash, DateTime creationDate,
-                        string resourceUrl = "", string description = "");
+                        string resourceUrl = "", string description = "", string userName = "");
     }
 }

@@ -34,13 +34,14 @@ namespace PasswordManager.Data
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
-        public Record Create(string resourceName, string resourcePasswordHash, DateTime creationDate, string resourceUrl = "", string description = "")
+        public Record Create(string resourceName, string resourcePasswordHash, DateTime creationDate, string resourceUrl = "", string description = "", string userName = "")
         {
             Record record = new Record();
             record.ChangeResourceName(resourceName);
             record.ChangeResourcePasswordHash(resourcePasswordHash);
             record.ChangeResourceUrl(resourceUrl);
             record.ChangeDescription(description);
+            record.ChangeUserName(userName);
             record.GetType()?.GetProperty(nameof(record.CreationDate))?.SetValue(record, creationDate);
             record.GetType()?.GetProperty(nameof(record.LastAccessDate))?.SetValue(record, creationDate);
             record.GetType()?.GetProperty(nameof(record.LastModifiedDate))?.SetValue(record, creationDate);

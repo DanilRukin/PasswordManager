@@ -1,4 +1,5 @@
-﻿using PasswordManager.Domain.RecordEntity.Events;
+﻿using PasswordManager.Domain.Exceptions;
+using PasswordManager.Domain.RecordEntity.Events;
 using PasswordManager.SharedKernel;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace PasswordManager.Domain.RecordEntity
         public string ResourceName { get; private set; }
         public string ResourcePasswordHash { get; private set; }
         public string ResourceUrl { get; private set; }
+        public string UserName { get; private set; }
 
         public int? RecordContainerId { get; private set; }
 
@@ -27,6 +29,7 @@ namespace PasswordManager.Domain.RecordEntity
             ResourceName = "";
             ResourcePasswordHash = "";
             ResourceUrl = "";
+            UserName = "";
             DateTime now = DateTime.UtcNow;
             CreationDate = now;
             LastAccessDate = now;
@@ -63,6 +66,14 @@ namespace PasswordManager.Domain.RecordEntity
                 return;
             ResourceUrl = url;
             AddDomainEvent(new ResourceUrlChangedEvent(Id, url));
+        }
+
+        public void ChangeUserName(string userName)
+        {
+            if (userName == null)
+                throw new DomainException("Can not to change name of record");
+            UserName = userName;
+            AddDomainEvent(new UserNameChangedEvent(Id, userName));
         }
 
         public void ChangeLastAccessDate(DateTime lastAccessDate)

@@ -19,6 +19,7 @@ namespace PasswordManager.Application.Services.Mappers
             {
                 dto.ResourceName = source.ResourceName;
                 dto.ResourceUrl = source.ResourceUrl;
+                dto.UserName = source.UserName;
                 dto.Description = source.Description;
                 dto.CreationDate = source.CreationDate;
                 dto.LastAccessDate = source.LastAccessDate;

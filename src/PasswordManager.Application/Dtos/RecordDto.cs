@@ -16,6 +16,7 @@ namespace PasswordManager.Application.Dtos
         public string ResourceName { get; set; } = "";
         public string ResourcePasswordHash { get; set; } = "";
         public string ResourceUrl { get; set; } = "";
+        public string UserName { get; set; } = "";
 
         public int? RecordContainerId { get; set; } = 0;
 
