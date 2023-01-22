@@ -50,6 +50,7 @@ namespace PasswordManager.Application.RecordEntity.Commands
                 if (request.Record.LastModifiedDate != record.LastModifiedDate)
                     record.ChangeLastModifiedDate(request.Record.LastModifiedDate);
 
+                _context.Records.Update(record);
                 await _context.SaveEntitiesAsync(cancellationToken);
                 return Result.Success(_mapper.Map(record));
             }

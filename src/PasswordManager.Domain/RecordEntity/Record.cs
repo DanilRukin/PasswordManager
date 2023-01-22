@@ -96,5 +96,7 @@ namespace PasswordManager.Domain.RecordEntity
         {
             RecordContainerId = id;
         }
+
+        internal bool HasContainer() => RecordContainerId != null && RecordContainerId != 0;
     }
 }

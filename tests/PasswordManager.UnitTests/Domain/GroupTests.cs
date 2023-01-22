@@ -66,5 +66,19 @@ namespace PasswordManager.UnitTests.Domain
             Assert.NotEmpty(db.Records);
             Assert.Contains(record, db.Records);
         }
+
+        [Fact]
+        public void AddRecordToAnotherGroup_ButRecordAlreadyHasAContainer_ThrowsInvalidOperationExceptionWithMessage()
+        {
+            Group firstGroup = _groupFactory.Create("group");
+            Group secondGroup = _groupFactory.Create("group");
+            Record record = _recordFactory.Create("", "", DateTime.UtcNow);
+            firstGroup.AddRecord(record);
+            string message = "Unable to add record because it's already has a container.";
+
+            var ex = Assert.Throws<InvalidOperationException>(() => secondGroup.AddRecord(record));
+            Assert.NotNull(ex);
+            Assert.Equal(message, ex.Message);
+        }
     }
 }

@@ -22,6 +22,8 @@ namespace PasswordManager.Domain.GroupAgregate
         {
             if (record == null)
                 return;
+            if (record.HasContainer())
+                throw new InvalidOperationException("Unable to add record because it's already has a container.");
             _records ??= new List<Record>();
             if (!_records.Contains(record))
             {
@@ -38,6 +40,7 @@ namespace PasswordManager.Domain.GroupAgregate
                 {
                     if (_records?.Remove(record) == true)
                     {
+                        record.ChangeContainerId(0);
                         ParentDatabase.AddRecord(record);
                         record.ChangeContainerId(ParentDatabase.Id);
                     }

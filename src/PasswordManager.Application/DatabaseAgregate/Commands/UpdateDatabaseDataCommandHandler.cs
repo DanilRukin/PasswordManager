@@ -34,6 +34,7 @@ namespace PasswordManager.Application.DatabaseAgregate.Commands
                 if (database == null)
                     return Result<DatabaseDto>.NotFound($"No such database with id: {request.Database.Id}");
                 database.ChangeName(request.Database.Name);
+                _context.Databases.Update(database);
                 await _context.SaveEntitiesAsync(cancellationToken);
                 return Result.Success(_mapper.Map(database));
             }
