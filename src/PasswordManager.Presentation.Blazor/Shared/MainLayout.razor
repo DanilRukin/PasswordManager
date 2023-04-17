@@ -4,7 +4,7 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-<MudLayout>
+<MudLayout Class="d-flex flex-column align-stretch gap-1" Style="min-height: 100%;">
     
     <MudAppBar Elevation="0">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
@@ -19,7 +19,7 @@
         </MudDrawerHeader>
         <NavMenu />
     </MudDrawer>*@
-    <MudMainContent>
+    <MudMainContent Class="d-flex flex-column align-stretch gap-1" Style="min-height: 100%;">
         <MudPaper>
             <MudToolBar>
                 <MudMenu Label="Базы" FullWidth="false" ActivationEvent="@MouseEvent.MouseOver"
@@ -40,9 +40,18 @@
             </MudToolBar>
         </MudPaper>
         <PasswordManager.Presentation.Blazor.Components.TapeComponent />
-        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
-            @Body
-        </MudContainer>
+        <MudGrid Class="flex-grow-1">
+            <MudItem xs="2" Class="mt-3">
+                <MudText Class="ms-3" Align="Align.Left" Typo="Typo.h5" GutterBottom="true">Все элементы</MudText>
+                <NavMenu />              
+            </MudItem>    
+            <MudDivider Class="mt-3" Vertical="true" FlexItem="true" />
+            <MudItem Class="flex-grow-1">
+                <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
+                    @Body
+                </MudContainer>
+            </MudItem>
+        </MudGrid> 
     </MudMainContent>
 </MudLayout>
 

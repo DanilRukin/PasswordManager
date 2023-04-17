@@ -1,0 +1,86 @@
+﻿@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@using MediatR
+@using PasswordManager.Application.Dtos;
+@using PasswordManager.Application.PasswordGenerator.Commands;
+@using PasswordManager.Application.Services.Interfaces;
+@using PasswordManager.Presentation.Blazor.ViewModels
+@using System.Text
+
+
+@inject ISnackbar Snackbar
+@inject IMediator Mediator
+@inject IMapper<PasswordOptionsViewModel, PasswordOptionsDto> ViewModelToDtoMapper
+
+
+<MudText Typo="Typo.h3" GutterBottom="true">Генератор паролей с блэкджеком и шл...&#128518;</MudText>
+
+<MudPaper Class="pa-4">
+    <MudForm>
+        <MudNumericField @bind-Value="Model.Length" Label="Общая длина" Required="true" Min="1" />
+        <MudText Class="mt-5" Typo="Typo.body1" GutterBottom="true">
+            Регистр
+        </MudText>
+        <MudPaper Class="mt-5 mb-5 p-5">
+            <MudGrid Class="gap-3">
+                <MudItem xs="12" Class="ps-5">
+                    <MudSwitch @bind-Checked="@Model.UpperCaseOnly" Label="Верхний" Color="Color.Primary" />
+                </MudItem>
+                <MudItem xs="12" Class="ps-5">
+                    <MudSwitch @bind-Checked="@Model.LowerCaseOnly" Label="Нижний" Color="Color.Primary" />
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+        <MudNumericField Class="mt-5" Label="Число символов" @bind-Value="Model.CountOfCharacters" Min="1" />
+        <MudNumericField Class="mt-5" Label="Число цифр" @bind-Value="Model.CountOfNumbers" Min="1" />
+
+        <MudTextField @bind-Text="Model.SpecialSymbols" Class="mt-5" T="string" Label="Специальные символы" HelperText="Символы должны быть разделены пробелом" />
+        <div class="d-flex justify-content-between mt-5">
+            <div>
+            </div>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto mt-3" @onclick="Generate">Генерировать</MudButton>
+        </div>
+    </MudForm>
+</MudPaper>
+<MudPaper Class="pa-4 mt-4">
+    <MudGrid>
+        <MudItem xs="12">
+            <MudText GutterBottom="true">Результат</MudText>
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField ReadOnly="true" @bind-Value="_password" Label="Результат" Variant="Variant.Outlined"></MudTextField>
+        </MudItem>
+    </MudGrid>
+</MudPaper>
+
+@code {
+    public PasswordOptionsViewModel Model { get; set; } = new PasswordOptionsViewModel();
+    private string _password = "";
+
+    private async Task Generate()
+    {
+        CreatePasswordCommand command = new(ViewModelToDtoMapper.Map(Model));
+        var response = await Mediator.Send(command);
+        if (response.IsSuccess)
+        {
+            Snackbar.Add("Пароль сгенерирован", Severity.Success);
+            _password = response.Value;
+        }
+        else
+        {
+            Snackbar.Add($"Ошибка: {ErrorsToString(response.Errors)}", Severity.Error);
+        }
+    }
+
+    private string ErrorsToString(IEnumerable<string> errors, string delimeter = "; ")
+    {
+        StringBuilder builder = new StringBuilder(errors.Count() * 2);
+        foreach (var item in errors)
+        {
+            builder.Append(item);
+            builder.Append(delimeter);
+        }
+        return builder.ToString();
+    }
+}

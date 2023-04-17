@@ -12,6 +12,7 @@ using PasswordManager.Application.Dtos;
 using PasswordManager.Application.Services.Mappers;
 using PasswordManager.Domain.GroupAgregate;
 using PasswordManager.Domain.RecordEntity;
+using PasswordManager.Domain;
 
 namespace PasswordManager.Application
 {
@@ -27,7 +28,8 @@ namespace PasswordManager.Application
         {
             return services.AddScoped<IMapper<Database, DatabaseDto>, DatabaseToDatabaseDtoMapper>()
                 .AddScoped<IMapper<Group, GroupDto>, GroupToGroupDtoMapper>()
-                .AddScoped<IMapper<Record, RecordDto>, RecordToRecordDtoMapper>();
+                .AddScoped<IMapper<Record, RecordDto>, RecordToRecordDtoMapper>()
+                .AddScoped<IMapper<PasswordOptionsDto, PasswordOptions>, PasswordOptionsDtoToPasswordOptionsMapper>();
         }
     }
 }
