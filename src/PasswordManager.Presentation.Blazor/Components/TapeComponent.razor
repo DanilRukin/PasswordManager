@@ -1,4 +1,4 @@
-﻿
+﻿@inject IDialogService DialogService
 
 <MudPaper>
     <MudToolBar Style="height:150px;">
@@ -8,9 +8,9 @@
         <MudDivider Vertical="true" FlexItem="true" />
         <TapeSectionComponent SectionName="Записи"/>
         <MudDivider Vertical="true" FlexItem="true" />
-        <MudGrid Justify="Justify.Center">
+        <MudGrid Style="min-width: 600px;" Class="flex-grow-4" Justify="Justify.Center">
             <MudItem xs="6" Class="d-flex align-center">
-                <MudButton Class="align-self-center mr-3" Variant="Variant.Filled" Color="Color.Primary">Генератор</MudButton>                
+                <MudButton @onclick=OnGeneratorCall Class="align-self-center" Variant="Variant.Filled" Color="Color.Primary">Генератор</MudButton>                
             </MudItem>  
             <MudItem>
                 <MudTextField T="string" Label="Поиск" Variant="Variant.Outlined" Adornment="Adornment.Start"
@@ -24,4 +24,11 @@
         </MudGrid>
     </MudToolBar>
 </MudPaper>
+
+@code{
+    private void OnGeneratorCall()
+    {
+        DialogService.Show<PasswordManager.Presentation.Blazor.Dialogs.PasswordGeneratorDialog>("Генератор паролей");
+    }
+}
 

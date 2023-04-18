@@ -1,7 +1,13 @@
 ﻿@inherits LayoutComponentBase
 
 <MudThemeProvider />
-<MudDialogProvider />
+<MudDialogProvider FullWidth="true"
+                   MaxWidth="MaxWidth.Large"
+                   CloseButton="true"
+                   DisableBackdropClick="true"
+                   NoHeader="false"
+                   Position="DialogPosition.Center"
+                   CloseOnEscapeKey="true" />
 <MudSnackbarProvider />
 
 <MudLayout Class="d-flex flex-column align-stretch gap-1" Style="min-height: 100%;">
@@ -19,7 +25,7 @@
         </MudDrawerHeader>
         <NavMenu />
     </MudDrawer>*@
-    <MudMainContent Class="d-flex flex-column align-stretch gap-1" Style="min-height: 100%;">
+    <MudMainContent Class="d-flex flex-column align-stretch gap-1" Style="min-height: 100%; height: 100%;">
         <MudPaper>
             <MudToolBar>
                 <MudMenu Label="Базы" FullWidth="false" ActivationEvent="@MouseEvent.MouseOver"
@@ -46,6 +52,10 @@
                 <NavMenu />              
             </MudItem>    
             <MudDivider Class="mt-3" Vertical="true" FlexItem="true" />
+            <MudItem xs="2" Class="mt-3">
+                <PasswordManager.Presentation.Blazor.Components.RecordsListComponent Items="_records" />
+            </MudItem>
+            <MudDivider Class="mt-3" Vertical="true" FlexItem="true" />
             <MudItem Class="flex-grow-1">
                 <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
                     @Body
@@ -62,4 +72,9 @@
     {
         _drawerOpen = !_drawerOpen;
     }
+
+    private List<string> _records = new List<string>
+    {
+        "1", "2", "3", "4", "5"
+    };
 }

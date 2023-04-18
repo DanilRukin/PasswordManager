@@ -1,0 +1,16 @@
+﻿
+<MudList Clickable="true" @bind-SelectedItem="_selectedItem">
+    @foreach(string item in Items)
+    {
+        <MudListItem Value="item" Text="@item"/>
+    }
+</MudList>
+
+
+@code {
+    [Parameter]
+    public List<string> Items { get; set; }
+
+    private MudListItem _selectedItem;
+    private string _selectedValue = "";
+}
